@@ -71,9 +71,17 @@ func (m *prepare) UI() *usig.UI {
 	return m.ui
 }
 
+func (m* prepare) Secret() []byte {
+	return m.pbMsg.GetSecret()
+}
+
 func (m *prepare) SetUI(ui *usig.UI) {
 	m.ui = ui
 	m.pbMsg.Ui = usig.MustMarshalUI(ui)
+}
+
+func (m *prepare) SetSecret( secret []byte) {
+	m.pbMsg.Secret=secret
 }
 
 func (prepare) ImplementsReplicaMessage() {}

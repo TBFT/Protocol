@@ -29,6 +29,7 @@ message Message{
         Prepare prepare = 4;
         Commit commit = 5;
         ReqViewChange req_view_change = 6;
+		Vote vote = 7;
     }
 }
 
@@ -84,6 +85,8 @@ message Prepare {
 
     // Replica's UI
     bytes ui = 4;
+
+	bytes secret = 5;
 }
 
 // Commit represents COMMIT message.
@@ -109,3 +112,19 @@ message ReqViewChange {
     // Replica's signature
     bytes signature = 3;
 }
+
+
+// Vote represents Vote message.
+message Vote {
+    // Replica identifier
+    uint32 replica_id = 1;
+
+    // Primary's PREPARE
+    Prepare prepare = 2;
+
+    // Replica's Signature
+    bytes signature = 3;
+
+	bytes share = 4;
+}
+

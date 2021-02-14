@@ -37,6 +37,8 @@ func AuthenBytes(m Message) []byte {
 		tag = "PREPARE"
 	case Commit:
 		tag = "COMMIT"
+	case Vote:
+		tag = "VOTE"
 	case ReqViewChange:
 		tag = "REQ-VIEW-CHANGE"
 	default:
@@ -63,11 +65,15 @@ func writeAuthenBytes(buf io.Writer, m Message) {
 		req := m.Request()
 		_ = binary.Write(buf, binary.BigEndian, req.ClientID())
 		writeAuthenBytes(buf, req)
+		_ = binary.Write(buf, binary.BigEndian, m.Secret())
 	case Commit:
 		prep := m.Prepare()
 		_ = binary.Write(buf, binary.BigEndian, prep.ReplicaID())
 		writeAuthenBytes(buf, prep)
 		_ = binary.Write(buf, binary.BigEndian, prep.UI().Counter)
+	case Vote:
+		_ = binary.Write(buf, binary.BigEndian, m.ReplicaID())
+		_ = binary.Write(buf, binary.BigEndian, m.Share())
 	case ReqViewChange:
 		_ = binary.Write(buf, binary.BigEndian, m.NewView())
 	default:

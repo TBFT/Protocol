@@ -9,7 +9,7 @@ protocol:
   "f": 1
 
   # Checkpoint period
-  checkpointPeriod: 10
+  checkpointPeriod: 100
 
   # Max log size (high minus low water mark)
   logsize: 20
@@ -17,10 +17,10 @@ protocol:
   # Timeouts
   timeout:
     # Request processing timeout (triggers view change)
-    request: 2s
+    request: 3s
 
     # Prepare processing timeout (forwards request if expired)
-    prepare: 1s
+    prepare: 3s
 
     # Initial view change timeout (triggers another view change)
     viewchange: 3s

@@ -57,6 +57,10 @@ func (*impl) NewCommit(r uint32, prep messages.Prepare) messages.Commit {
 	return newCommit(r, prep)
 }
 
+func (*impl) NewVote(r uint32, prep messages.Prepare) messages.Vote {
+	return newVote(r, prep)
+}
+
 func (*impl) NewReply(r, cl uint32, seq uint64, res []byte) messages.Reply {
 	return newReply(r, cl, seq, res)
 }
@@ -77,6 +81,8 @@ func typedMessageFromPb(pbMsg *pb.Message) (messages.Message, error) {
 		return newPrepareFromPb(t.Prepare)
 	case *pb.Message_Commit:
 		return newCommitFromPb(t.Commit)
+	case *pb.Message_Vote:
+		return newVoteFromPb(t.Vote)
 	case *pb.Message_ReqViewChange:
 		return newReqViewChangeFromPb(t.ReqViewChange)
 	default:
@@ -97,6 +103,8 @@ func marshalMessage(m proto.Message) ([]byte, error) {
 		pbMsg.Typed = &pb.Message_Prepare{Prepare: m}
 	case *pb.Commit:
 		pbMsg.Typed = &pb.Message_Commit{Commit: m}
+	case *pb.Vote:
+		pbMsg.Typed = &pb.Message_Vote{Vote: m}
 	case *pb.ReqViewChange:
 		pbMsg.Typed = &pb.Message_ReqViewChange{ReqViewChange: m}
 	default:
