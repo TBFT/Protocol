@@ -1,6 +1,6 @@
 # TBFT
 
-  * [Overview][#Overview]
+  * [Overview](#Overview)
   * [Requirements](#requirements)
       * [Operating System](#operating-system)
       * [Golang](#golang)
